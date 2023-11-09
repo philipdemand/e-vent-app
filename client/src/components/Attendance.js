@@ -7,6 +7,7 @@ function Attendance({ attendance, onCancelRegistration, onChangeTotalAttendees }
 
     const [isClicked, setIsClicked] = useState(false)
     const [attendees, setAttendees] = useState(1);
+    const [errorData, setErrorData] = useState([])
 
     const {user} = useContext(UserContext)
 
@@ -28,29 +29,37 @@ function Attendance({ attendance, onCancelRegistration, onChangeTotalAttendees }
           },
           body: JSON.stringify({total_attendees: parseInt(attendees)}),
         })
-        .then((r) => r.json())
-        .then(attendanceObject => onChangeTotalAttendees(attendanceObject))
-        .then(setIsClicked(false))
+        .then((res) => {
+          if (res.ok) {
+            res.json().then((attendanceObject) => onChangeTotalAttendees(attendanceObject))
+            setIsClicked(false)
+          } else {
+            res.json().then((data) => setErrorData(data.errors));
+          }
+        })
       };
     
     return (
         <div>
             <li>
-                {username} with {total_attendees} {total_attendees === 1 ? "attendee" : "attendees"}
-                {user.id === user_id ? <button onClick={() => onCancelRegistration(id)}>Cancel Registration</button> : null}
-                <div>
-                {user.id === user_id && !isClicked ? 
-                    <button onClick={() => onEditAttendees(id)}>Change Number of Attendees</button>
-                : null}
-                {isClicked ? <div>
-                <label>Total Number of Attendees:</label>
-                <select value={attendees} onChange={(e) => setAttendees(e.target.value)}>
-                  {attendeesOptions}
-                </select>
-                <button onClick={handleSubmitAttendees}>Submit</button>
-                </div> : null}
-                </div>
+              {username} with {total_attendees} {total_attendees === 1 ? "attendee" : "attendees"}
+              {user.id === user_id ? <button onClick={() => onCancelRegistration(id)}>Cancel Registration</button> : null}
+              <div>
+              {user.id === user_id && !isClicked ? 
+                  <button onClick={() => onEditAttendees(id)}>Change Number of Attendees</button>
+              : null}
+              {isClicked ? <div>
+              <label>Total Number of Attendees:</label>
+              <select value={attendees} onChange={(e) => setAttendees(e.target.value)}>
+                {attendeesOptions}
+              </select>
+              <button onClick={handleSubmitAttendees}>Submit</button>
+              </div> : null}
+              </div>
             </li>
+            {errorData.length > 0 ? <ul style={{ color: "red" }}>
+            {errorData.map((error, i) => <li key={i}>{error}</li>)}
+          </ul> : null}
         </div>
     )
 }

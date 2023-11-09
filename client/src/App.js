@@ -91,8 +91,7 @@ function App() {
         <Route path="/userevents"
           element={<UserEvents />} />
         <Route path="/" 
-          element={<LandingPage />} 
-      />
+          element={<LandingPage />} />
         <Route path="/events" 
           element={<EventList 
             events={events} 

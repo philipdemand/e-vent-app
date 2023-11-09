@@ -14,7 +14,7 @@ const CreateEvent = ({ onAddEvent }) => {
 
   const navigate = useNavigate();
 
-  function resetForm() {
+  const resetForm = () => {
     setEventData({
       title: '',
       address: '',
@@ -29,7 +29,7 @@ const CreateEvent = ({ onAddEvent }) => {
     setEventData({ ...eventData, [name]: value });
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newEvent = {
       title: eventData.title,

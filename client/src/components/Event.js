@@ -15,9 +15,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
   }
 
   const handleRegister = () => {
-    const user_id = user.id
     const postData = {
-      user_id: user_id,
       total_attendees: parseInt(attendees)
     };
     fetch(`/events/${event.id}/attendances`, {
@@ -37,9 +35,6 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
       .then((newAttendance) => {
         onAttendanceRegistered(newAttendance);
       })
-      .catch((error) => {
-        console.error('Network error:', error);
-      });
   };
 
   const handleCancelRegistration = (id) => {
@@ -48,15 +43,17 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
     })
       .then((response) => {
         if (response.ok) {
-          onDeleteAttendance(id, event.id)
+          onDeleteAttendance(id, event.id);
         } else {
-          console.error('Failed to cancel registration:', response.statusText);
+          response.json().then((data) => {
+            const errorMessage = data.message || 'Failed to cancel registration';
+            setErrorData([errorMessage]);
+          })
         }
       })
-      .catch((error) => {
-        console.error('Network error:', error);
+      .finally(() => {
+        setAttendees(1);
       });
-    setAttendees(1);
   };
 
   const eventTime = new Date(event.time).toLocaleTimeString('en-US', {
