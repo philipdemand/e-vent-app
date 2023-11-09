@@ -23,9 +23,4 @@ event2 = Event.create(
   details: 'Event 2 details will be provided soon.'
 )
 
-# Create attendances
-# Attendance.create(user: user1, event: event1, confirmed: true, total_attendees: 3)
-# Attendance.create(user: user2, event: event1, confirmed: false, total_attendees: 2)
-# Attendance.create(user: user1, event: event2, confirmed: true, total_attendees: 4)
-
 puts 'Seeding completed successfully!'

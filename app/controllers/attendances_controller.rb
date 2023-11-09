@@ -28,10 +28,10 @@ class AttendancesController < ApplicationController
       end
     end
 
-    def index
-      attendances = Attendance.all
-      render json: attendances
-    end
+    # def index
+    #   attendances = Attendance.all
+    #   render json: attendances
+    # end
     
     private
     

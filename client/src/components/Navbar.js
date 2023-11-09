@@ -22,12 +22,13 @@ const Navbar = () => {
     <nav className="navbar">
       {!user ? (<Link to="/" className="logo">
         E-Vent
-      </Link>) : 
-      (<Link to="/events" className="logo">
-      E-Vent
-    </Link>)
-      }
+        </Link>) 
+          : 
+        (<Link to="/events" className="logo">
+          E-Vent
+        </Link>)}
       { user ? <h4 className="identify">Welcome {user.username}!</h4> : null }
+      { user ? <Link to="/userevents"><button className="logout-button">Your Registered Events</button></Link> : null }
       { user ? <button onClick={handleLogoutClick} className="logout-button">Logout</button> : null }
     </nav>
   );

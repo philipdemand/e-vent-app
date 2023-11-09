@@ -5,7 +5,6 @@ import AttendeesList from './AttendeesList'
 const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDeleteAttendance }) => {
 
   const [attendees, setAttendees] = useState(1);
-  const [editingAttendees, setEditingAttendees] = useState(false);
   const [errorData, setErrorData] = useState([])
 
   const {user} = useContext(UserContext)
@@ -14,14 +13,6 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
     const attenObj = event.attendances.find(obj => obj.user_id === user.id);
     return attenObj
   }
-
-  const isRegistered = event.attendances && event.attendances.length > 0
-  ? event.attendances.some((attendance) => attendance.user_id === user.id)
-  : false;
-
-  const registeredAttendance = isRegistered
-  ? event.attendances.find((attendance) => attendance.user_id === user.id)
-  : null;
 
   const handleRegister = () => {
     const user_id = user.id
@@ -51,30 +42,13 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
       });
   };
 
-  const handleEditAttendees = () => {
-    setEditingAttendees(true);
-  };
-
-  const handleSubmitAttendees = () => {
-    setEditingAttendees(false);
-    fetch(`/events/${event.id}/attendances/${registeredAttendance.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({total_attendees: parseInt(attendees)}),
-    })
-    .then((r) => r.json())
-    .then(attendanceObject => onChangeTotalAttendees(attendanceObject))
-  };
-
   const handleCancelRegistration = (id) => {
     fetch(`/events/${event.id}/attendances/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
         if (response.ok) {
-          onDeleteAttendance(id)
+          onDeleteAttendance(id, event.id)
         } else {
           console.error('Failed to cancel registration:', response.statusText);
         }
@@ -109,20 +83,6 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
       {hasUserId() ? (
         <div>
           <h4>You are registered for this event</h4>
-          {editingAttendees ? (
-            <div>
-              <label>Total Number of Attendees:</label>
-              <select value={attendees} onChange={(e) => setAttendees(e.target.value)}>
-                {attendeesOptions}
-              </select>
-              <button onClick={handleSubmitAttendees}>Submit</button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={handleEditAttendees}>Change Number of Attendees</button> <br></br> <br></br>
-              {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
-            </div>
-          )}
         </div>
       ) : (
         <div>
@@ -138,6 +98,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
         <AttendeesList 
           event={event} 
           onCancelRegistration={handleCancelRegistration}
+          onChangeTotalAttendees={onChangeTotalAttendees}
         />
       </div>
     </div>

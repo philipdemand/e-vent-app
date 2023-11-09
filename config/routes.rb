@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   # post '/events/:id/attendance', to: 'attendances#create'
 
-  get '/attendances', to: 'attendances#index'
+  # get '/attendances', to: 'attendances#index'
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 

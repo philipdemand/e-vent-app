@@ -6,6 +6,7 @@ import EventList from './components/EventList';
 import CreateEvent from './components/CreateEvent';
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
+import UserEvents from './components/UserEvents'
 import { UserContext } from './contexts/UserContext'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [events, setEvents] = useState([])
 
   const {user} = useContext(UserContext);
+  const {setUser} = useContext(UserContext)
 
   useEffect(() => {
     fetch('/events')
@@ -37,6 +39,12 @@ function App() {
       return event;
     });
     setEvents(updatedEvents);
+    const targetEvent = events.find(event => event.id === newAttendance.event_id)
+    const updatedUser = {
+      ...user,
+      events: [...user.events, targetEvent]
+    };
+    setUser(updatedUser)
   };
 
   const handleChangeTotalAttendees = (object) => {
@@ -53,15 +61,20 @@ function App() {
     setEvents(updatedEvents);
   };
 
-  const handleDeleteAttendance = (id) => {
+  const handleDeleteAttendance = (attId, eventId) => {
     const updatedEvents = events.map((event) => {
       return {
         ...event,
-        attendances: event.attendances.filter((attendance) => attendance.id !== id),
+        attendances: event.attendances.filter((attendance) => attendance.id !== attId),
       };
     });
-  
     setEvents(updatedEvents);
+    const updatedUserEvents = user.events.filter(event => event.id !== eventId)
+    const updatedUser = {
+      ...user,
+      events: updatedUserEvents
+    };
+    setUser(updatedUser)
   }
 
   return (
@@ -75,21 +88,25 @@ function App() {
       </Routes>
     ) : (
       <Routes>
-      <Route path="/" 
-        element={<LandingPage />} 
+        <Route path="/userevents"
+          element={<UserEvents />} />
+        <Route path="/" 
+          element={<LandingPage />} 
+      />
+        <Route path="/events" 
+          element={<EventList 
+            events={events} 
+            onAttendanceRegistered={handleAttendanceRegistered}
+            onChangeTotalAttendees={handleChangeTotalAttendees}
+            onDeleteAttendance={handleDeleteAttendance}
+          />} 
         />
-      <Route path="/events" 
-        element={<EventList 
-          events={events} 
-          onAttendanceRegistered={handleAttendanceRegistered}
-          onChangeTotalAttendees={handleChangeTotalAttendees}
-          onDeleteAttendance={handleDeleteAttendance}
-          />} />
-      <Route path="/events/create" 
-        element={<CreateEvent 
-          onAddEvent={handleAddEvent}
-          />} />
-    </Routes>
+        <Route path="/events/create" 
+          element={<CreateEvent 
+            onAddEvent={handleAddEvent}
+          />} 
+        />
+      </Routes>
     )}
     </>
   );
