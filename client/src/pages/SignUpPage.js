@@ -65,7 +65,7 @@ const SignUpPage = () => {
           <div>
             <b>Password must:</b>
           <ul>
-            <li>Be at leat 8 characters long</li>
+            <li>Be at least 8 characters long</li>
             <li>Have at least one special character</li>
             <li>Have at least one uppercase letter and at least one lowercase letter</li>
             <li>Have at least one digit</li>
