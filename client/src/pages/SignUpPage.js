@@ -60,6 +60,17 @@ const SignUpPage = () => {
         <div>
           <label htmlFor="confirmation">Confirm Password:</label>
           <input type="password" id="confirmation" value={passwordConfirmation} onChange={handlePassConfChange} />
+          <br></br>
+          <br></br>
+          <div>
+            <b>Password must:</b>
+          <ul>
+            <li>Be at leat 8 characters long</li>
+            <li>Have at least one special character</li>
+            <li>Have at least one uppercase letter and at least one lowercase letter</li>
+            <li>Have at least one digit</li>
+          </ul>
+          </div>
         </div>
         <button type="submit">Sign Up</button>
         {errorData.length > 0 ? <ul style={{ color: "red" }}>

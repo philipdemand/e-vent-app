@@ -33,6 +33,7 @@ function Attendance({ attendance, onCancelRegistration, onChangeTotalAttendees }
           if (res.ok) {
             res.json().then((attendanceObject) => onChangeTotalAttendees(attendanceObject))
             setIsClicked(false)
+            setErrorData([])
           } else {
             res.json().then((data) => setErrorData(data.errors));
           }

@@ -27,14 +27,14 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
     })
       .then((response) => {
         if (response.ok) {
-          return response.json()
+          return response.json().then((newAttendance) => {
+            onAttendanceRegistered(newAttendance);
+          })
         } else {
           response.json().then((data) => setErrorData(data.errors))
         }
       })
-      .then((newAttendance) => {
-        onAttendanceRegistered(newAttendance);
-      })
+      
   };
 
   const handleCancelRegistration = (id) => {
@@ -69,9 +69,6 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
   
   return (
     <div className="event">
-      {errorData.length > 0 ? <ul style={{ color: "red" }}>
-          {errorData.map((error, i) => <li key={i}>{error}</li>)}
-      </ul> : null}
       <h2>{event.title}</h2>
       <p>Date: {event.date}</p>
       <p>Time: {eventTime}</p>
@@ -89,6 +86,9 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
             {attendeesOptions}
           </select>
           <button onClick={handleRegister}>Register</button>
+          {errorData.length > 0 ? <ul style={{ color: "red" }}>
+          {errorData.map((error, i) => <li key={i}>{error}</li>)}
+      </ul> : null}
         </div>
       )}
       <div>
