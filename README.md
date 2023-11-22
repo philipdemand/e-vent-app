@@ -10,7 +10,7 @@ E-Vent uses BCrypt to authenticate users.
 A logged-in user can:
   Persist their logged-in state through a page refresh
   Create an event with details
-    (CRUD actions on Attendance using RESTful and custom routes)
+    (CRUD actions on Attendance using RESTful routes)
     Register for an existing event, along with the total number of attendees they plan to bring
     Have their registration displayed to all users
     Update their number of attendees
