@@ -9,10 +9,6 @@ Rails.application.routes.draw do
     resources :attendances, only: [:create, :update, :destroy]
   end
 
-  # post '/events/:id/attendance', to: 'attendances#create'
-
-  # get '/attendances', to: 'attendances#index'
-
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
 end

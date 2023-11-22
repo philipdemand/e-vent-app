@@ -12,7 +12,6 @@ import { UserContext } from './contexts/UserContext'
 function App() {
 
   const [events, setEvents] = useState([])
-
   const {user} = useContext(UserContext);
   const {setUser} = useContext(UserContext)
 
@@ -29,15 +28,11 @@ function App() {
   }
 
   const handleAttendanceRegistered = (newAttendance) => {
-    const updatedEvents = events.map((event) => {
-      if (event.id === newAttendance.event_id) {
-        return {
-          ...event,
-          attendances: [...event.attendances, newAttendance],
-        };
-      }
-      return event;
-    });
+    const updatedEvents = events.map((event) => ({
+      ...event,
+      attendances: event.id === newAttendance.event_id
+      ? [...event.attendances, newAttendance]
+      : event.attendances }));
     setEvents(updatedEvents);
     const targetEvent = events.find(event => event.id === newAttendance.event_id)
     const updatedUser = {
@@ -48,26 +43,19 @@ function App() {
   };
 
   const handleChangeTotalAttendees = (object) => {
-    const updatedEvents = events.map((event) => {
-      if (event.id === object.event_id) {
-        return {
-          ...event,
-          attendances: event.attendances.map(att => att.id === object.id ? object : att)
-        };
-      }
-      return event;
-    });
-  
+    const updatedEvents = events.map((event) => ({
+      ...event,
+      attendances: event.id === object.event_id
+      ? event.attendances.map(att => att.id === object.id ? object : att)
+      : event.attendances }));
     setEvents(updatedEvents);
   };
 
   const handleDeleteAttendance = (attId, eventId) => {
-    const updatedEvents = events.map((event) => {
-      return {
-        ...event,
-        attendances: event.attendances.filter((attendance) => attendance.id !== attId),
-      };
-    });
+    const updatedEvents = events.map((event) => ({
+      ...event,
+      attendances: event.attendances.filter((attendance) => attendance.id !== attId)
+    }));
     setEvents(updatedEvents);
     const updatedUserEvents = user.events.filter(event => event.id !== eventId)
     const updatedUser = {

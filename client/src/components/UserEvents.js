@@ -7,7 +7,7 @@ function UserEvents() {
 
     return(
         <ul>
-            {user.events.map(event => <li key={event.id}>{event.title}</li>)}
+            <h2>{user.events.map(event => <li key={event.id}>{event.title}</li>)}</h2>
         </ul>
     )
 }

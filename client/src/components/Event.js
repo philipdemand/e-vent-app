@@ -9,10 +9,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
 
   const {user} = useContext(UserContext)
 
-  const hasUserId = () => {
-    const attenObj = event.attendances.find(obj => obj.user_id === user.id);
-    return attenObj
-  }
+  const isUserRegistered = event.attendances.some(obj => obj.user_id === user.id);
 
   const handleRegister = () => {
     const postData = {
@@ -74,7 +71,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
       <p>Time: {eventTime}</p>
       <p>Location: {event.address}</p>
       <p>Details: {event.details}</p>
-      {hasUserId() ? (
+      {isUserRegistered ? (
         <div>
           <h4>You are registered for this event</h4>
         </div>

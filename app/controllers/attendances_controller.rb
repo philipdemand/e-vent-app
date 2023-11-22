@@ -1,5 +1,7 @@
 class AttendancesController < ApplicationController
 
+  skip_before_action :authorized, only: :min
+
     def create
       attendance = Attendance.new(attendance_params)
       attendance.event_id = params[:event_id]
@@ -13,6 +15,8 @@ class AttendancesController < ApplicationController
       if session[:user_id] == attendance.user_id
         attendance.update!(attendance_params)
         render json: attendance
+      else
+        render json: { error: 'Unauthorized: You do not have permission to update this attendance record.' }, status: :unauthorized
       end
     end
 
@@ -21,6 +25,8 @@ class AttendancesController < ApplicationController
       if session[:user_id] == attendance.user_id
         attendance.destroy
         head :no_content
+      else
+        render json: { error: 'Unauthorized: You do not have permission to delete this attendance record.' }, status: :unauthorized
       end
     end
     

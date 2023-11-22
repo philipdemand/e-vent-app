@@ -13,6 +13,7 @@ function Attendance({ attendance, onCancelRegistration, onChangeTotalAttendees }
 
     const onEditAttendees = () => {
         setIsClicked(true)
+        setAttendees(attendance.total_attendees)
     }
 
     const attendeesOptions = Array.from({ length: 10 }, (_, i) => (

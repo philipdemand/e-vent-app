@@ -3,8 +3,8 @@ Event.destroy_all
 User.destroy_all
 
 # Create users
-user1 = User.create(username: 'john_doe', password: 'password123')
-user2 = User.create(username: 'jane_smith', password: 'password456')
+user1 = User.create(username: 'john_doe', password: 'Password123!')
+user2 = User.create(username: 'jane_smith', password: 'Password456!')
 
 # Create events
 event1 = Event.create(
