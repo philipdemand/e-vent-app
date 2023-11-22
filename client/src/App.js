@@ -62,7 +62,8 @@ function App() {
       ...user,
       events: updatedUserEvents
     };
-    setUser(updatedUser) }
+    setUser(updatedUser) 
+  }
 
   return (
     <>
