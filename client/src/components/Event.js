@@ -15,7 +15,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
     const postData = {
       total_attendees: parseInt(attendees)
     };
-    fetch(`/events/${event.id}/attendances`, {
+    fetch(`/api/v1/events/${event.id}/attendances`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const Event = ({ event, onAttendanceRegistered, onChangeTotalAttendees, onDelete
   };
 
   const handleCancelRegistration = (id) => {
-    fetch(`/events/${event.id}/attendances/${id}`, {
+    fetch(`/api/v1/events/${event.id}/attendances/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {

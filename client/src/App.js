@@ -16,7 +16,7 @@ function App() {
   const {setUser} = useContext(UserContext)
 
   useEffect(() => {
-    fetch('/events')
+    fetch('/api/v1/events')
     .then((res) => res.json())
     .then((data) => setEvents(data))
     .catch((error) => console.error('Error fetching events:', error));
@@ -81,7 +81,7 @@ function App() {
         <Route path="/" 
           element={<LandingPage />} />
         <Route path="/events" 
-          element={<EventList 
+          element={<EventList
             events={events} 
             onAttendanceRegistered={handleAttendanceRegistered}
             onChangeTotalAttendees={handleChangeTotalAttendees}

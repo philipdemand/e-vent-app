@@ -1,4 +1,4 @@
-class EventsController < ApplicationController
+class Api::V1::EventsController < ApplicationController
 
     skip_before_action :authorized, only: :index
 

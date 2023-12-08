@@ -23,7 +23,7 @@ function Attendance({ attendance, onCancelRegistration, onChangeTotalAttendees }
       ));
 
       const handleSubmitAttendees = () => {
-        fetch(`/events/${event_id}/attendances/${id}`, {
+        fetch(`/api/v1/events/${event_id}/attendances/${id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

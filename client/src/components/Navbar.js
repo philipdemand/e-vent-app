@@ -10,7 +10,7 @@ const Navbar = () => {
     const {user, setUser} = useContext(UserContext)
 
     function handleLogoutClick() {
-        fetch("/logout", { method: "DELETE" }).then((r) => {
+        fetch("/api/v1/logout", { method: "DELETE" }).then((r) => {
           if (r.ok) {
             setUser(null);
           }

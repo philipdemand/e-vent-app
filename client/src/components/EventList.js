@@ -6,19 +6,18 @@ const EventList = ({ events, onAttendanceRegistered, onChangeTotalAttendees, onD
 
   return (
     <div>
-      <Link to="/events/create">
+      <Link to="/api/v1/events/create">
           <button className="createbutton">Create Event</button>
       </Link>
-      <h1>Events</h1>
       {events.map((event) => (
-        <Event 
-          key={event.id} 
-          event={event}
-          onAttendanceRegistered={onAttendanceRegistered}
-          onChangeTotalAttendees={onChangeTotalAttendees}
-          onDeleteAttendance={onDeleteAttendance}
-        />
-      ))}
+            <Event
+              key={event.id}
+              event={event}
+              onAttendanceRegistered={onAttendanceRegistered}
+              onChangeTotalAttendees={onChangeTotalAttendees}
+              onDeleteAttendance={onDeleteAttendance}
+            />
+          ))}
     </div>
   );
 };

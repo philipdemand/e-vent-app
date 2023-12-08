@@ -38,7 +38,7 @@ const CreateEvent = ({ onAddEvent }) => {
       time: eventData.time,
       details: eventData.details,
     };
-    fetch("/events", {
+    fetch("/api/v1/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

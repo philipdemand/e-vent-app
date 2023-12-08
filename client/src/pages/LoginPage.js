@@ -24,7 +24,7 @@ const LoginPage = () => {
       username: username,
       password: password,
     };
-    fetch("/login", {
+    fetch("/api/v1/login", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

@@ -1,4 +1,4 @@
-class AttendancesController < ApplicationController
+class Api::V1::AttendancesController < ApplicationController
 
   skip_before_action :authorized, only: :min
 

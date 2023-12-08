@@ -10,7 +10,7 @@ function UserProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/me").then((res) => {
+    fetch("api/v1/me").then((res) => {
       if (res.ok) {
         res.json().then((data) => setUser(data));
         navigate("/events");

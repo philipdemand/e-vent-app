@@ -6,6 +6,16 @@ class User < ApplicationRecord
     validate :password_complexity
     has_secure_password
 
+    def self.most_attendances
+      all_users = User.all
+      sorted = all_users.sort_by { |user| -user.attendances.length }
+      sorted.first
+    end
+
+    def atten_num
+      self.attendances.length
+    end
+
     private
 
     def password_complexity
